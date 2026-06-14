@@ -50,31 +50,6 @@ AWS CloudFormation (DeployStack)
      └── DynamoDB Table (mood-journal entries)
 ```
 
-### CI/CD Pipeline (AWS CodePipeline)
-
-As shown in the pipeline screenshot, deployments flow through four stages, all triggered by a push to the `main` branch:
-
-| Stage | Tool | Description |
-|---|---|---|
-| **Source** | GitHub (via GitHub App) | Detects code changes |
-| **Build** | AWS CodeBuild | Packages `lambda/index.py` into `lambda.zip` |
-| **Deploy** | AWS CloudFormation | Deploys/updates the full app stack |
-| **PostDeploy** | AWS CodeBuild | Syncs website assets to S3 and invalidates the CloudFront cache |
-
----
-
-## 🗂️ Repository Structure
-
-```
-Expression/
-├── lambda/
-│   └── index.py              # Python 3.12 Lambda handler
-├── website/                  # Static frontend (HTML/JS/CSS)
-├── cloudformation.yaml       # App stack: Lambda, API, DynamoDB, Cognito, CloudFront
-├── buildspec.yml             # Build phase: packages Lambda zip + artifacts
-└── buildspec-post.yml        # Post-deploy: S3 sync + CloudFront invalidation
-```
-
 > **Architecture note:** The pipeline infrastructure (CodePipeline, CodeBuild, ArtifactsBucket, IAM roles) lives in a separate `pipeline.yaml` deployed once manually. `cloudformation.yaml` contains only the application stack — ensuring the pipeline never attempts to recreate itself on each run.
 
 ---
@@ -96,46 +71,6 @@ Expression/
 
 ---
 
-## 🔌 API Endpoints
-
-All routes are JWT-authenticated via Cognito and served through API Gateway.
-
-| Method | Route | Description |
-|---|---|---|
-| `POST` | `/detect` | Submit mood, expression data, and journal text → returns AI advice + saves entry |
-| `POST` | `/resolve` | Alias endpoint for mood resolution flow |
-| `GET` | `/entries` | Retrieve all past journal entries for the authenticated user |
-
----
-
-## 🚀 Deployment
-
-### Prerequisites
-
-- AWS CLI configured with appropriate permissions
-- An existing CodeConnections connection to GitHub
-- The pipeline stack already deployed manually
-
-### Deploy the App Stack Manually (first time)
-
-```bash
-aws cloudformation deploy \
-  --template-file cloudformation.yaml \
-  --stack-name face-expression-lab \
-  --capabilities CAPABILITY_IAM
-```
-
-### Subsequent Deployments
-
-Push to the `main` branch — CodePipeline handles everything automatically:
-
-1. Detects the change via GitHub App
-2. Runs `buildspec.yml` to package the Lambda
-3. Deploys `cloudformation.yaml` via CloudFormation
-4. Runs `buildspec-post.yml` to sync the website and bust the CloudFront cache
-
----
-
 ## 💡 Design Decisions
 
 **Why personalised AI advice rather than static content?**
@@ -147,14 +82,4 @@ Not everyone can fully articulate why they feel a certain way. Emotional intelli
 **Why serverless?**
 The fully serverless architecture (Lambda + API Gateway + DynamoDB + CloudFront) means zero infrastructure management, automatic scaling, and pay-per-request pricing — ideal for a wellness app with variable usage patterns.
 
----
 
-## 🛠️ Tech Stack
-
-- **Frontend:** HTML, JavaScript, CSS (72.5% of codebase)
-- **Backend:** Python 3.12 on AWS Lambda (27.5% of codebase)
-- **AI Model:** `anthropic.claude-haiku-4-5-20251001-v1:0` via Amazon Bedrock
-- **Infrastructure:** AWS CloudFormation (IaC)
-- **CI/CD:** AWS CodePipeline + CodeBuild
-
----
