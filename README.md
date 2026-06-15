@@ -28,32 +28,6 @@ The core insight behind the project: not everyone can fully label their own emot
 
 ---
 
-## 🏗️ Architecture
-
-```
-GitHub (source)
-     │
-     ▼
-AWS CodePipeline  ──►  CodeBuild (Build + PostDeploy)
-     │
-     ▼
-AWS CloudFormation (DeployStack)
-     │
-     ├── S3 (static website hosting)
-     ├── CloudFront (CDN, HTTPS)
-     ├── Amazon Cognito (auth)
-     ├── API Gateway HTTP API (JWT-secured routes)
-     ├── AWS Lambda (Python 3.12 handler)
-     │     ├── Amazon Rekognition (expression detection)
-     │     ├── Amazon Bedrock / Claude Haiku (AI advice)
-     │     └── DynamoDB (entry storage)
-     └── DynamoDB Table (mood-journal entries)
-```
-
-> **Architecture note:** The pipeline infrastructure (CodePipeline, CodeBuild, ArtifactsBucket, IAM roles) lives in a separate `pipeline.yaml` deployed once manually. `cloudformation.yaml` contains only the application stack — ensuring the pipeline never attempts to recreate itself on each run.
-
----
-
 ## ☁️ AWS Services Used
 
 | Service | Role |
