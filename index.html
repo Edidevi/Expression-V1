@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mood Journal — Project Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f7f5f0;
+    color: #2b2622;
+    font-family: 'Lora', serif;
+    line-height: 1.7;
+    font-size: 1.02rem;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 3rem 5rem 4.5rem;
+    position: relative;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    left: 3rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #c97064;
+    opacity: 0.4;
+  }
+
+  /* ===== Header ===== */
+  header {
+    border-bottom: 1px solid #2b2622;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    color: #a39a8b;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 3.4rem;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+
+  .standfirst {
+    font-size: 1.05rem;
+    color: #5c544a;
+    max-width: 540px;
+  }
+
+  .disclaimer {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: #b5614f;
+    border: 1px dashed #c97064;
+    padding: 0.4rem 0.8rem;
+    border-radius: 2px;
+    background: #fdf8f7;
+  }
+
+  .links {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .links a {
+    font-family: 'Lora', serif;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: #2b2622;
+    border: 1px solid #2b2622;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .links a:hover {
+    background: #2b2622;
+    color: #f4f0e6;
+  }
+
+  /* ===== Section headings ===== */
+  h2 {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 2.1rem;
+    color: #2b2622;
+    margin-bottom: 1.25rem;
+  }
+
+  section {
+    margin-bottom: 3rem;
+  }
+
+  /* ===== Screenshot, taped photo ===== */
+  .photo-wrap {
+    text-align: center;
+    margin: 1.75rem 0 2.5rem;
+  }
+
+  .photo {
+    display: inline-block;
+    background: #ffffff;
+    padding: 0.75rem 0.75rem 1.25rem;
+    box-shadow: 3px 4px 10px rgba(43, 38, 34, 0.12);
+    transform: rotate(-1.2deg);
+    position: relative;
+  }
+
+  .photo::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(3deg);
+    width: 70px;
+    height: 22px;
+    background: rgba(201, 112, 100, 0.35);
+  }
+
+  .photo img {
+    display: block;
+    max-width: 280px;
+    width: 100%;
+    border-radius: 1px;
+  }
+
+  .photo figcaption {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: #8a8073;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+
+  /* ===== Overview prose ===== */
+  .overview p {
+    margin-bottom: 1rem;
+    color: #3e372f;
+    max-width: 620px;
+  }
+
+  .overview .insight {
+    font-style: italic;
+    color: #6b7a5e;
+    border-left: 2px solid #97a983;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  /* ===== Features checklist ===== */
+  .feature-list {
+    list-style: none;
+  }
+
+  .feature-list li {
+    display: flex;
+    gap: 0.9rem;
+    margin-bottom: 1.1rem;
+    align-items: baseline;
+  }
+
+  .feature-list .check {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #c97064;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .feature-list .feature-title {
+    font-weight: 600;
+    color: #2b2622;
+  }
+
+  .feature-list .feature-desc {
+    color: #6b6155;
+    font-size: 0.95rem;
+  }
+
+  /* ===== Design decisions, marginalia ===== */
+  .note {
+    background: #ffffff;
+    border: 1px solid #e3ded4;
+    box-shadow: 3px 3px 0 #ece8e0;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .note .q {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #2b2622;
+    margin-bottom: 0.5rem;
+  }
+
+  .note .a {
+    color: #5c544a;
+    font-size: 0.96rem;
+  }
+
+  /* ===== Tech stack ===== */
+  .stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .stack-tags span {
+    font-size: 0.82rem;
+    font-family: 'Lora', serif;
+    color: #6b6155;
+    border: 1px solid #ddd7cc;
+    border-radius: 20px;
+    padding: 0.3rem 0.9rem;
+    background: #ffffff;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    border-top: 1px solid #2b2622;
+    padding-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #a39a8b;
+    font-style: italic;
+  }
+
+  footer a {
+    color: #c97064;
+    text-decoration: none;
+  }
+
+  @media (max-width: 620px) {
+    .page { padding: 2.5rem 1.5rem 3.5rem 3rem; }
+    h1 { font-size: 2.6rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <header>
+      <div class="eyebrow">AWS · Serverless · Generative AI</div>
+      <h1>Mood Journal</h1>
+      <p class="standfirst">
+        A serverless, AI-powered well-being app that pairs facial expression detection with personal journaling
+        to deliver compassionate, real-time guidance — grounded in what the user actually feels, not just what
+        a camera thinks it sees.
+      </p>
+      <div class="disclaimer">Not designed to replace therapy or counselling — built as a self-study project</div>
+      <div class="links">
+        <a href="https://dc2b8er08430l.cloudfront.net/" target="_blank">Live demo →</a>
+        <a href="https://github.com/Edidevi/Expression" target="_blank">Repository →</a>
+        <a href="https://edidevi.github.io/My-Work/">← Back to portfolio</a>
+      </div>
+    </header>
+
+    <section class="overview">
+      <h2>What it does</h2>
+      <p>
+        Mood Journal meets users wherever they are — whether they check in daily or only reach
+        for it when they need an outlet for a difficult emotion. A user snaps a photo, Amazon
+        Rekognition reads their facial expression, and the app shows that reading back to them.
+      </p>
+      <p>
+        From there, the user has the final word: confirm the detected emotion, or correct it —
+        either by picking from a list or typing their own. Either way, they then write a few
+        words about what's behind the feeling, and Amazon Bedrock (Claude Haiku) responds with
+        warm, practical advice shaped by their emotion, their words, and what's helped them before.
+      </p>
+      <p class="insight">
+        The core idea: not everyone can fully label their own emotions in the moment.
+        Emotional intelligence can be learned — and this app helps bridge that gap through
+        gentle, AI-guided reflection, with the user always in control of the final read.
+      </p>
+
+      <figure class="photo-wrap">
+        <div class="photo">
+          <img src="https://github.com/user-attachments/assets/73985d78-a945-4e96-aa47-242caf53e07f" alt="Mood Journal app screenshot" />
+        </div>
+        <figcaption>the app, mid check-in</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <ul class="feature-list">
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <div class="feature-title">Facial expression detection</div>
+            <div class="feature-desc">Amazon Rekognition reads a snapshot and returns an emotion with a confidence score.</div>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <div class="feature-title">Confirm or correct</div>
+            <div class="feature-desc">Accept the detected emotion, or correct it via quick-pick or free text — the user always has the final say.</div>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <div class="feature-title">Mood journaling</div>
+            <div class="feature-desc">Users describe what's behind the feeling; entries are stored per-user with timestamps.</div>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <div class="feature-title">AI-powered advice</div>
+            <div class="feature-desc">Claude Haiku 4.5 via Bedrock generates compassionate, practical guidance grounded in the confirmed emotion, reason, and journal history.</div>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <div class="feature-title">Pattern summary</div>
+            <div class="feature-desc">After 15 entries, the app surfaces the user's most common recent emotion plus AI suggestions for improving it.</div>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <div class="feature-title">Secure authentication</div>
+            <div class="feature-desc">Email-based sign-up and login via Amazon Cognito, JWT-authenticated end to end.</div>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <div class="feature-title">Fully serverless CI/CD</div>
+            <div class="feature-desc">A 4-stage CodePipeline builds, deploys via CloudFormation, syncs the frontend, and invalidates CloudFront — on every push to main.</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Design decisions</h2>
+
+      <div class="note">
+        <div class="q">Why let users confirm or correct the detected emotion?</div>
+        <div class="a">
+          Facial expression detection isn't always accurate, and a single frame doesn't always
+          reflect what someone feels inside. Rather than presenting Rekognition's output as
+          ground truth, the app treats it as a starting point — keeping the AI's advice grounded
+          in reality rather than a misread expression.
+        </div>
+      </div>
+
+      <div class="note">
+        <div class="q">Why personalised AI advice rather than static content?</div>
+        <div class="a">
+          Mental health isn't one-size-fits-all. By combining the user's confirmed emotion, their
+          own words, and a summary of what's helped before, the AI tailors advice to their
+          specific state — useful whether someone checks in every day or only when they're struggling.
+        </div>
+      </div>
+
+      <div class="note">
+        <div class="q">Why a pattern summary after 15 entries?</div>
+        <div class="a">
+          A single entry is a snapshot; a pattern is a signal. Surfacing "you've been feeling X
+          lately" alongside AI suggestions turns the journal from a log into a tool for noticing
+          trends — without overwhelming new users who don't have enough data yet.
+        </div>
+      </div>
+
+      <div class="note">
+        <div class="q">Why serverless?</div>
+        <div class="a">
+          Lambda, API Gateway, DynamoDB and CloudFront mean zero infrastructure management,
+          automatic scaling, and pay-per-request pricing — ideal for a wellness app with
+          unpredictable usage patterns.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Built with</h2>
+      <div class="stack-tags">
+        <span>AWS Lambda</span>
+        <span>API Gateway</span>
+        <span>Amazon Cognito</span>
+        <span>DynamoDB</span>
+        <span>Amazon Rekognition</span>
+        <span>Bedrock — Claude Haiku 4.5</span>
+        <span>S3</span>
+        <span>CloudFront</span>
+        <span>CodePipeline</span>
+        <span>CodeBuild</span>
+        <span>CloudFormation</span>
+        <span>Python</span>
+        <span>JavaScript</span>
+      </div>
+    </section>
+
+    <footer>
+      Part of <a href="https://edidevi.github.io/My-Work/">OsaruEdiae's portfolio</a> —
+      maintained by <a href="https://github.com/Edidevi">Edidevi</a>
+    </footer>
+
+  </div>
+</body>
+</html>
