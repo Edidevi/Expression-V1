@@ -28,30 +28,13 @@ The core insight behind the project: not everyone can fully label their own emot
 
 ---
 
-## ☁️ AWS Services Used
-
-| Service | Role |
-|---|---|
-| **S3** | Static website hosting for the frontend |
-| **CloudFront** | HTTPS CDN delivery (`d381ybey4gt21f.cloudfront.net`) |
-| **Cognito** | User pool, email-based sign-up/login, JWT token issuance |
-| **API Gateway (HTTP)** | Exposes `/detect`, `/resolve`, and `/entries` routes |
-| **Lambda (Python 3.12)** | Core backend logic — mood processing, Rekognition calls, Bedrock AI |
-| **Amazon Rekognition** | Detects facial expressions from user images |
-| **Amazon Bedrock (Claude Haiku)** | Generates personalised mental well-being advice |
-| **DynamoDB** | Stores journal entries (userId + entryId composite key) |
-| **CodePipeline / CodeBuild** | CI/CD pipeline for automated deployment |
-| **CloudFormation** | Infrastructure as Code for the full app stack |
-
----
-
 ## 💡 Design Decisions
 
 **Why personalised AI advice rather than static content?**
 Mental health is not one-size-fits-all. What works for one person may not help another. By combining the user's own written description with their detected visual expression, the AI can tailor advice to their specific state at that moment — making the app useful whether someone checks in every day or only when they're struggling.
 
 **Why facial expression detection?**
-Not everyone can fully articulate why they feel a certain way. Emotional intelligence is a learned skill, and the app uses Rekognition to surface cues the user may not have consciously registered, giving the AI more context for a more accurate and helpful response.
+Not everyone can fully articulate why they feel a certain way. Emotional intelligence is a learned skill, and the app uses Rekognition to surface cues the user may not have consciously registered, giving the AI more context for a more accurate and helpful response. Use of this tool coupled with counselling and therapeutic assistance, this could increase ones emotional intelligence.
 
 **Why serverless?**
 The fully serverless architecture (Lambda + API Gateway + DynamoDB + CloudFront) means zero infrastructure management, automatic scaling, and pay-per-request pricing — ideal for a wellness app with variable usage patterns.
