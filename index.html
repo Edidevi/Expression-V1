@@ -3,286 +3,387 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mood Journal — Project Notes</title>
+<title>Mood Journal — OsaruEdiae</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #f7f5f0;
-    color: #2b2622;
-    font-family: 'Lora', serif;
-    line-height: 1.7;
-    font-size: 1.02rem;
+    background: #f0ede8;
+    color: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    font-size: 0.95rem;
   }
 
-  .page {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 3rem 3rem 5rem 4.5rem;
-    position: relative;
-  }
-
-  .page::before {
-    content: '';
-    position: absolute;
-    left: 3rem;
+  /* ===== NAV ===== */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid #d8d4ce;
+    background: #f0ede8;
+    position: sticky;
     top: 0;
-    bottom: 0;
-    width: 1px;
-    background: #c97064;
-    opacity: 0.4;
+    z-index: 10;
   }
 
-  /* ===== Header ===== */
+  .nav-brand {
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.88rem;
+  }
+
+  .nav-links a {
+    color: #4a4a4a;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: #1a1a1a; }
+
+  /* ===== LAYOUT ===== */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  /* ===== HEADER ===== */
   header {
-    border-bottom: 1px solid #2b2622;
-    padding-bottom: 1.5rem;
-    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #d8d4ce;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .header-text { flex: 1; min-width: 0; }
+
+  .header-image {
+    flex-shrink: 0;
+    width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-image img {
+    width: 100%;
+    max-width: 220px;
+    display: block;
   }
 
   .eyebrow {
-    font-size: 0.78rem;
-    color: #a39a8b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #3b82f6;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: #3b82f6;
   }
 
   h1 {
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
-    font-size: 3.4rem;
+    font-weight: 900;
+    font-size: 2.8rem;
     line-height: 1.1;
-    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
   }
 
   .standfirst {
-    font-size: 1.05rem;
-    color: #5c544a;
-    max-width: 540px;
+    font-size: 1rem;
+    color: #555;
+    max-width: 580px;
+    line-height: 1.7;
+    margin-bottom: 1rem;
   }
 
   .disclaimer {
     display: inline-block;
-    margin-top: 1rem;
-    font-size: 0.78rem;
-    color: #b5614f;
-    border: 1px dashed #c97064;
-    padding: 0.4rem 0.8rem;
-    border-radius: 2px;
-    background: #fdf8f7;
-  }
-
-  .links {
-    margin-top: 1.25rem;
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  .links a {
-    font-family: 'Lora', serif;
-    font-size: 0.85rem;
-    text-decoration: none;
-    color: #2b2622;
-    border: 1px solid #2b2622;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .links a:hover {
-    background: #2b2622;
-    color: #f4f0e6;
-  }
-
-  /* ===== Section headings ===== */
-  h2 {
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
-    font-size: 2.1rem;
-    color: #2b2622;
+    font-size: 0.75rem;
+    color: #888;
+    border: 1px dashed #ccc;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
     margin-bottom: 1.25rem;
   }
 
+  .links {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .links a {
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #1a1a1a;
+    border: 1px solid #c0bbb4;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    background: transparent;
+  }
+
+  .links a:hover {
+    background: #1a1a1a;
+    color: #f0ede8;
+    border-color: #1a1a1a;
+  }
+
+  /* ===== SECTIONS ===== */
   section {
     margin-bottom: 3rem;
   }
 
-  /* ===== Screenshot, taped photo ===== */
+  h2 {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.3px;
+    color: #1a1a1a;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ===== OVERVIEW PROSE ===== */
+  .overview p {
+    color: #3a3a3a;
+    margin-bottom: 0.9rem;
+    max-width: 660px;
+  }
+
+  .insight {
+    border-left: 3px solid #3b82f6;
+    padding-left: 1rem;
+    color: #555;
+    font-size: 0.93rem;
+    margin: 1.5rem 0;
+    max-width: 600px;
+  }
+
+  /* ===== IMAGE ===== */
   .photo-wrap {
-    text-align: center;
-    margin: 1.75rem 0 2.5rem;
+    margin: 2rem 0 1rem;
   }
 
   .photo {
     display: inline-block;
-    background: #ffffff;
-    padding: 0.75rem 0.75rem 1.25rem;
-    box-shadow: 3px 4px 10px rgba(43, 38, 34, 0.12);
-    transform: rotate(-1.2deg);
+    background: #fff;
+    padding: 0.6rem 0.6rem 1.1rem;
+    box-shadow: 2px 3px 12px rgba(0,0,0,0.10);
+    transform: rotate(-0.8deg);
     position: relative;
+    border-radius: 2px;
   }
 
   .photo::before {
     content: '';
     position: absolute;
-    top: -10px;
+    top: -9px;
     left: 50%;
-    transform: translateX(-50%) rotate(3deg);
-    width: 70px;
-    height: 22px;
-    background: rgba(201, 112, 100, 0.35);
+    transform: translateX(-50%) rotate(2deg);
+    width: 60px;
+    height: 18px;
+    background: rgba(59,130,246,0.25);
   }
 
   .photo img {
     display: block;
-    max-width: 600px;
+    max-width: 560px;
     width: 100%;
     border-radius: 1px;
   }
 
   .photo figcaption {
-    font-family: 'Caveat', cursive;
-    font-size: 1.1rem;
-    color: #8a8073;
-    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: #999;
+    margin-top: 0.5rem;
     text-align: center;
-  }
-
-  /* ===== Overview prose ===== */
-  .overview p {
-    margin-bottom: 1rem;
-    color: #3e372f;
-    max-width: 620px;
-  }
-
-  .overview .insight {
     font-style: italic;
-    color: #6b7a5e;
-    border-left: 2px solid #97a983;
-    padding-left: 1rem;
-    margin: 1.5rem 0;
   }
 
-  /* ===== Features checklist ===== */
+  /* ===== FEATURE LIST ===== */
   .feature-list {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
   .feature-list li {
     display: flex;
-    gap: 0.9rem;
-    margin-bottom: 1.1rem;
-    align-items: baseline;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    background: #fff;
+    border: 1px solid #ddd9d3;
+    border-bottom: none;
+    transition: background 0.12s;
   }
 
-  .feature-list .check {
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: #c97064;
+  .feature-list li:first-child { border-radius: 10px 10px 0 0; }
+  .feature-list li:last-child  { border-bottom: 1px solid #ddd9d3; border-radius: 0 0 10px 10px; }
+
+  .feature-list li:hover { background: #f8f6f3; }
+
+  .feature-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    line-height: 1;
+    margin-top: 1px;
   }
 
-  .feature-list .feature-title {
+  .feature-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: #3b82f6;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .feature-title {
     font-weight: 600;
-    color: #2b2622;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    margin-bottom: 0.15rem;
   }
 
-  .feature-list .feature-desc {
-    color: #6b6155;
-    font-size: 0.95rem;
+  .feature-desc {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
   }
 
-  /* ===== Design decisions, marginalia ===== */
+  /* ===== DESIGN DECISIONS ===== */
   .note {
-    background: #ffffff;
-    border: 1px solid #e3ded4;
-    box-shadow: 3px 3px 0 #ece8e0;
-    padding: 1.5rem 1.75rem;
-    margin-bottom: 1.5rem;
+    background: #fff;
+    border: 1px solid #ddd9d3;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .note .q {
-    font-family: 'Caveat', cursive;
     font-weight: 700;
-    font-size: 1.4rem;
-    color: #2b2622;
+    font-size: 0.92rem;
+    color: #1a1a1a;
     margin-bottom: 0.5rem;
   }
 
   .note .a {
-    color: #5c544a;
-    font-size: 0.96rem;
+    font-size: 0.88rem;
+    color: #555;
+    line-height: 1.65;
   }
 
-  /* ===== Tech stack ===== */
+  /* ===== STACK TAGS ===== */
   .stack-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
 
   .stack-tags span {
-    font-size: 0.82rem;
-    font-family: 'Lora', serif;
-    color: #6b6155;
-    border: 1px solid #ddd7cc;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #3b82f6;
+    border: 1px solid #bfdbfe;
     border-radius: 20px;
-    padding: 0.3rem 0.9rem;
-    background: #ffffff;
+    padding: 0.3rem 0.85rem;
+    background: #eff6ff;
   }
 
-  /* ===== Footer ===== */
+  /* ===== FOOTER ===== */
   footer {
-    border-top: 1px solid #2b2622;
+    border-top: 1px solid #d8d4ce;
     padding-top: 1.5rem;
-    font-size: 0.85rem;
-    color: #a39a8b;
-    font-style: italic;
+    font-size: 0.82rem;
+    color: #999;
   }
 
   footer a {
-    color: #c97064;
+    color: #3b82f6;
     text-decoration: none;
   }
 
+  footer a:hover { text-decoration: underline; }
+
   @media (max-width: 620px) {
-    .page { padding: 2.5rem 1.5rem 3.5rem 3rem; }
-    h1 { font-size: 2.6rem; }
+    nav { padding: 1rem 1.25rem; }
+    .page { padding: 2rem 1.25rem 3.5rem; }
+    h1 { font-size: 2rem; }
+    .nav-links { gap: 1.25rem; }
+    header { flex-direction: column-reverse; }
+    .header-image { width: 160px; }
   }
 </style>
 </head>
 <body>
+
+  <nav>
+    <a class="nav-brand" href="https://edidevi.github.io/My-Work/">OSARUEDIAE</a>
+    <div class="nav-links">
+      <a href="https://edidevi.github.io/My-Work/">Networking</a>
+      <a href="https://edidevi.github.io/About/">About</a>
+      <a href="https://github.com/Edidevi">GitHub</a>
+      <a href="https://www.linkedin.com/in/osaru-e-4011a7192/">Linkedin</a>
+    </div>
+  </nav>
+
   <div class="page">
-    <nav style="display:flex; justify-content:space-between; align-items:center; padding:1.5rem 0; border-bottom:1px solid #e3ded4; margin-bottom:2rem; max-width:760px; margin-left:auto; margin-right:auto;">
-  <div style="font-family:'Lora', serif; font-weight:700; font-size:1.1rem; letter-spacing:2px; text-transform:uppercase;">OsaruEdiae</div>
-  <div style="display:flex; gap:1.5rem; font-size:0.9rem; color:#6b6155;">
-  
-    <a href="https://edidevi.github.io/My-Work/" style="color:#6b6155; text-decoration:none;">Networking</a>
-    <a href="https://edidevi.github.io/About/" style="color:#6b6155; text-decoration:none;">About</a>
-    <a href="https://github.com/Edidevi" style="color:#6b6155; text-decoration:none;">GitHub</a>
-    <a href="https://www.linkedin.com/in/osaru-e-4011a7192/" style="color:#6b6155; text-decoration:none;">Linkedin</a>
-  </div>
-</nav>
+
     <header>
-      <div class="eyebrow">AWS · Serverless · Generative AI</div>
-      <h1>Mood Journal</h1>
-      <p class="standfirst">
-        A serverless, AI-powered well-being app that pairs facial expression detection with personal journaling
-        to deliver compassionate, real-time guidance — grounded in what the user actually feels, not just what
-        a camera thinks it sees.
-      </p>
-      <div class="disclaimer">Not designed to replace therapy or counselling — built as a self-study project</div>
-      <div class="links">
-        <a href="https://dc2b8er08430l.cloudfront.net/" target="_blank">Live demo →</a>
-        <a href="https://github.com/Edidevi/Expression" target="_blank">Repository →</a>
-        <a href="https://edidevi.github.io/My-Work/">← Back to portfolio</a>
+      <div class="header-text">
+        <div class="eyebrow">Portfolio</div>
+        <h1>Mood Journal</h1>
+        <p class="standfirst">
+          A serverless, AI-powered well-being app that pairs facial expression detection with personal journaling
+          to deliver compassionate, real-time guidance — grounded in what the user actually feels, not just what
+          a camera thinks it sees.
+        </p>
+        <div class="disclaimer">Not designed to replace therapy or counselling — built as a self-study project</div>
+        <div class="links">
+          <a href="https://dc2b8er08430l.cloudfront.net/" target="_blank">Live demo →</a>
+          <a href="https://github.com/Edidevi/Expression" target="_blank">Repository →</a>
+          <a href="https://edidevi.github.io/My-Work/">← Back to portfolio</a>
+        </div>
+      </div>
+      <div class="header-image">
+        <img src="https://raw.githubusercontent.com/Edidevi/Expression-V1/main/robot-journal.png" alt="AI robot journaling with emotional concepts" onerror="this.src='https://github.com/user-attachments/assets/73985d78-a945-4e96-aa47-242caf53e07f'" />
       </div>
     </header>
 
@@ -305,12 +406,11 @@
         gentle, AI-guided reflection, with the user always in control of the final read.
       </p>
 
-     
       <figure class="photo-wrap">
         <div class="photo">
           <img src="https://raw.githubusercontent.com/Edidevi/Expression-V1/main/preview.png" alt="Mood Journal app screenshot" />
+          <figcaption>the app, mid check-in</figcaption>
         </div>
-        <figcaption>the app, mid check-in</figcaption>
       </figure>
     </section>
 
@@ -318,49 +418,63 @@
       <h2>Features</h2>
       <ul class="feature-list">
         <li>
-          <span class="check">✓</span>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          </div>
           <div>
             <div class="feature-title">Facial expression detection</div>
             <div class="feature-desc">Amazon Rekognition reads a snapshot and returns an emotion with a confidence score.</div>
           </div>
         </li>
         <li>
-          <span class="check">✓</span>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
           <div>
             <div class="feature-title">Confirm or correct</div>
             <div class="feature-desc">Accept the detected emotion, or correct it via quick-pick or free text — the user always has the final say.</div>
           </div>
         </li>
         <li>
-          <span class="check">✓</span>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
           <div>
             <div class="feature-title">Mood journaling</div>
             <div class="feature-desc">Users describe what's behind the feeling; entries are stored per-user with timestamps.</div>
           </div>
         </li>
         <li>
-          <span class="check">✓</span>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
           <div>
             <div class="feature-title">AI-powered advice</div>
             <div class="feature-desc">Claude Haiku 4.5 via Bedrock generates compassionate, practical guidance grounded in the confirmed emotion, reason, and journal history.</div>
           </div>
         </li>
         <li>
-          <span class="check">✓</span>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
           <div>
             <div class="feature-title">Pattern summary</div>
             <div class="feature-desc">After 15 entries, the app surfaces the user's most common recent emotion plus AI suggestions for improving it.</div>
           </div>
         </li>
         <li>
-          <span class="check">✓</span>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
           <div>
             <div class="feature-title">Secure authentication</div>
             <div class="feature-desc">Email-based sign-up and login via Amazon Cognito, JWT-authenticated end to end.</div>
           </div>
         </li>
         <li>
-          <span class="check">✓</span>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
           <div>
             <div class="feature-title">Fully serverless CI/CD</div>
             <div class="feature-desc">A 4-stage CodePipeline builds, deploys via CloudFormation, syncs the frontend, and invalidates CloudFront — on every push to main.</div>
