@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title }} — {{ site.title }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0d1117;
+    --paper: #f8f7f4;
+    --accent: #1a6cf5;
+    --muted: #6b7280;
+    --border: #e5e2db;
+    --card: #ffffff;
+    --code-bg: #0d1117;
+    --code-text: #e6edf3;
+    --resolved: #22c55e;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.7;
+  }
+
+  .site-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .topbar-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .topbar-nav { display: flex; gap: 2rem; list-style: none; }
+
+  .topbar-nav a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .topbar-nav a:hover { color: var(--accent); }
+
+  /* ── BACK ── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 2.5rem;
+    transition: color 0.2s;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .back-link:hover { color: var(--accent); }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  .page-header-left { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .lab-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .lab-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .lab-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    line-height: 1.15;
+  }
+
+  .lab-description {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .disclaimer {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+  }
+
+  .header-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+  .header-links a {
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--accent);
+    border: 1px solid #c8d8fa;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    background: #eef3ff;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .header-links a:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* ── POLAROID (Expression signature element) ── */
+  .polaroid-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .polaroid {
+    background: var(--card);
+    padding: 0.6rem 0.6rem 1.5rem;
+    box-shadow: 2px 3px 18px rgba(0,0,0,0.10);
+    transform: rotate(-1.2deg);
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    position: relative;
+    max-width: 280px;
+    width: 100%;
+  }
+
+  .polaroid::before {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    width: 60px;
+    height: 18px;
+    background: rgba(26, 108, 245, 0.18);
+  }
+
+  .polaroid img {
+    display: block;
+    width: 100%;
+    border-radius: 1px;
+  }
+
+  /* ── BODY LAYOUT ── */
+  .lab-body {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    align-items: start;
+    animation: fadeUp 0.6s 0.25s ease both;
+  }
+
+  /* ── SECTION HEADING ── */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── OVERVIEW ── */
+  .overview-prose p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-bottom: 0.85rem;
+    max-width: 620px;
+    line-height: 1.75;
+  }
+
+  .insight {
+    border-left: 3px solid var(--accent);
+    padding: 0.6rem 1rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 1.2rem 0;
+    max-width: 600px;
+    background: #eef3ff;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* ── SCREENSHOT (polaroid style, inline) ── */
+  .screenshot-polaroid {
+    margin: 1.5rem 0;
+    display: inline-block;
+    background: var(--card);
+    padding: 0.5rem 0.5rem 1.2rem;
+    box-shadow: 2px 3px 14px rgba(0,0,0,0.09);
+    transform: rotate(-0.6deg);
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .screenshot-polaroid::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(1.5deg);
+    width: 60px;
+    height: 16px;
+    background: rgba(26, 108, 245, 0.18);
+  }
+
+  .screenshot-polaroid img {
+    display: block;
+    max-width: 520px;
+    width: 100%;
+    border-radius: 1px;
+  }
+
+  .screenshot-polaroid figcaption {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ── FEATURE LIST ── */
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .feature-list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    transition: background 0.12s;
+  }
+
+  .feature-list li:first-child { border-radius: 10px 10px 0 0; }
+  .feature-list li:last-child  { border-bottom: 1px solid var(--border); border-radius: 0 0 10px 10px; }
+  .feature-list li:hover { background: #fafaf9; }
+
+  .feature-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #eef3ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .feature-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .feature-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.15rem; }
+  .feature-desc  { font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+
+  /* ── DESIGN DECISIONS ── */
+  .note {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .note .q {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--ink);
+    margin-bottom: 0.45rem;
+  }
+
+  .note .a { font-size: 0.85rem; color: #4b5563; line-height: 1.65; }
+
+  /* ── STACK TAGS ── */
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .stack-tags span {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent);
+    border: 1px solid #c8d8fa;
+    border-radius: 100px;
+    padding: 0.3rem 0.85rem;
+    background: #eef3ff;
+  }
+
+  /* ── SIDEBAR ── */
+  .lab-sidebar {
+    position: sticky;
+    top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .sidebar-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem;
+  }
+
+  .sidebar-card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .sidebar-list li {
+    font-size: 0.82rem;
+    color: #4b5563;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .sidebar-list li::before { content: '›'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+  .learnings-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+
+  .learnings-list li {
+    font-size: 0.82rem;
+    color: #4b5563;
+    padding-left: 1rem;
+    border-left: 2px solid #c8d8fa;
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 5rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-text { font-size: 0.78rem; color: var(--muted); }
+  .footer-text a { color: var(--accent); text-decoration: none; }
+  .footer-text a:hover { text-decoration: underline; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 760px) {
+    .page-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .polaroid-wrap { justify-content: flex-start; }
+    .lab-title { font-size: 1.8rem; }
+    .lab-body { grid-template-columns: 1fr; }
+    .lab-sidebar { position: static; }
+    .topbar-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="site-wrapper">
+
+  <!-- TOPBAR -->
+  <nav class="topbar">
+    <a class="topbar-logo" href="/">{{ site.title | upcase }}</a>
+    <ul class="topbar-nav">
+      {% for item in site.nav %}
+      <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <!-- BACK -->
+  <a class="back-link" href="https://edidevi.github.io/AWS/">← Back to AWS projects</a>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <span class="lab-eyebrow">Portfolio</span>
+      <h1 class="lab-title">{{ page.title }}</h1>
+      <p class="lab-description">{{ page.description }}</p>
+      {% if page.disclaimer %}
+      <span class="disclaimer">{{ page.disclaimer }}</span>
+      {% endif %}
+      <div class="header-links">
+        {% for link in page.links %}
+        <a href="{{ link.url }}" target="_blank">{{ link.label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if page.hero_image %}
+    <div class="polaroid-wrap">
+      <div class="polaroid">
+        <img src="{{ page.hero_image }}" alt="{{ page.title }} hero image">
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- BODY -->
+  <div class="lab-body">
+    <div class="lab-content">
+
+      <!-- OVERVIEW -->
+      {% if page.overview %}
+      <section class="section">
+        <h2 class="section-heading">What it does</h2>
+        <div class="overview-prose">
+          {% for para in page.overview %}
+          <p>{{ para }}</p>
+          {% endfor %}
+        </div>
+        {% if page.insight %}
+        <p class="insight">{{ page.insight }}</p>
+        {% endif %}
+        {% if page.screenshot %}
+        <figure class="screenshot-polaroid">
+          <img src="{{ page.screenshot.src }}" alt="{{ page.screenshot.caption }}">
+          {% if page.screenshot.caption %}
+          <figcaption>{{ page.screenshot.caption }}</figcaption>
+          {% endif %}
+        </figure>
+        {% endif %}
+      </section>
+      {% endif %}
+
+      <!-- FEATURES -->
+      {% if page.features %}
+      <section class="section">
+        <h2 class="section-heading">Features</h2>
+        <ul class="feature-list">
+          {% for feature in page.features %}
+          <li>
+            <div class="feature-icon">
+              {% if feature.icon == "eye" %}
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+              {% elsif feature.icon == "check" %}
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              {% elsif feature.icon == "edit" %}
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              {% elsif feature.icon == "chat" %}
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              {% elsif feature.icon == "activity" %}
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              {% elsif feature.icon == "lock" %}
+              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              {% elsif feature.icon == "code" %}
+              <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              {% else %}
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></svg>
+              {% endif %}
+            </div>
+            <div>
+              <div class="feature-title">{{ feature.title }}</div>
+              <div class="feature-desc">{{ feature.desc }}</div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      <!-- DESIGN DECISIONS -->
+      {% if page.design_decisions %}
+      <section class="section">
+        <h2 class="section-heading">Design decisions</h2>
+        {% for decision in page.design_decisions %}
+        <div class="note">
+          <div class="q">{{ decision.q }}</div>
+          <div class="a">{{ decision.a }}</div>
+        </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+
+      <!-- STACK -->
+      {% if page.stack %}
+      <section class="section">
+        <h2 class="section-heading">Built with</h2>
+        <div class="stack-tags">
+          {% for item in page.stack %}
+          <span>{{ item }}</span>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="lab-sidebar">
+
+      {% if page.concepts %}
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">💡 Key Concepts</div>
+        <ul class="sidebar-list">
+          {% for item in page.concepts %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if page.learnings %}
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">📈 Key Learnings</div>
+        <ul class="learnings-list">
+          {% for item in page.learnings %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-text">Maintained by <a href="https://github.com/{{ site.github_username }}" target="_blank">{{ site.title }}</a></span>
+    <span class="footer-text">Hosted on <a href="{{ site.footer.hosted_url }}" target="_blank">{{ site.footer.hosted_on }}</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
