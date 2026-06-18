@@ -3,10 +3,14 @@ github_username: Edidevi
 url: https://edidevi.github.io/Expression-V1/
 
 nav:
-  - label: Work
+  - label: About
+    url: https://edidevi.github.io/About/
+  - label: Linkedin
+    url: https://www.linkedin.com/in/osaru-e-4011a7192/
+  - label: Networking
     url: https://edidevi.github.io/My-Work/
-  - label: GitHub
-    url: https://github.com/Edidevi
+  - label: Blog
+    url: 
 
 footer:
   hosted_on: GitHub Pages
